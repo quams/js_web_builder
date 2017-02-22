@@ -1,6 +1,55 @@
 require "js_web_builder/version"
+require 'rake'
+require 'rake/tasklib'
 
 module JSWebBuilder 
+
+class BuildTask < Rake::TaskLib
+
+	# Name of build task. (default is :js_build)
+    attr_accessor :name
+
+    # Description of the build task. (default is 'Building/Concatenating the JS files')
+    attr_accessor :description
+
+    # Glob pattern to match input files. (default is '*.js')
+    attr_accessor :pattern
+
+    # Task prerequisites.
+    attr_accessor :deps
+
+    # The output directory (default is '.')
+    attr_accessor :outdir
+
+    # The input directories, can be a single string or an array
+    attr_accessor :inputdirs
+
+    # Create a testing task.
+    def initialize(name=:js_build)
+        @name = name
+        @description = "Building/Concatenating the JS files"
+        @pattern = '*.js'
+        @deps = []
+        @outdir = "."
+        @inputdirs = []
+
+        yield self if block_given?
+        define
+    end # initialize
+
+    # Create the tasks defined by this task lib.
+    def define 
+        desc @description
+        task @name => Array(deps) do
+            puts "From #{@inputdirs} #{@outdir}"
+        end
+
+        self
+    end # define
+
+end # class BuildTask
+
+
 
 class FileReader
 	attr_reader :file 			# accessor is done manually
@@ -38,6 +87,6 @@ class FileReader
 		end
 	end
 
-end
+end # class FileReader
 
-end
+end # module JSWebBuilder

@@ -1,8 +1,8 @@
-# JSWebBuilder
+# JSWebBuilder [![Build Status](https://travis-ci.org/quams/js_web_builder.svg?branch=master)](https://travis-ci.org/quams/js_web_builder)
 
-This gem is a simple little hack to introduce some teeny-weeny bit of JavaScript asset pipeline management to my [sinatra](http://www.sinatrarb.com/) web applications. 
+This gem is a simple little hack to introduce some teeny-weeny bit of JavaScript asset pipeline management to my [sinatra](http://www.sinatrarb.com/) web applications. And since I like [rake](http://rake.rubyforge.org/) the whole thing is basically a custom rake task.
 
-This gem exists to allow for a more modular javascript development approach. It therefore does exactly and only the following things:
+This gem exists to allow for a more modular javascript development approach. It therefore does exactly and only the following things and in that order:
 
 1. It reads all files in a given directory
 2. For each file it searches for a special _//= require_ statement
@@ -12,7 +12,7 @@ For a more detailed description look under the usage section.
 
 The whole reason I did this gem is, because I spectacularly failed trying to integrate [sprockets](https://github.com/rails/sprockets) into my application. And having the functionality in my application **and** testing it got me nervous ticks.
 
-So I did this. Even though there are most likely 42 other gems to do exactly this. If you nevertheless like my little piece of code, feel free to use it. If you find a bug or want to add something, report it or create a pull request.
+So I did this. Even though there are most likely 42 other gems or methods to do exactly this. If you nevertheless like my little piece of code, feel free to use it. If you find a bug or want to add something, report it or create a pull request. If you think I am a moron for doing this, be polite and keep it to yourself.
 
 ## Installation
 
@@ -37,7 +37,45 @@ Or clone it somewhere and then install it (see section Development).
 
 ## Usage
 
-TODO: Write usage instructions here
+### Overview
+
+JSWebBuilder as basically nothing more than a simple implementation of [Rake::TaskLib](http://rake.rubyforge.org/Rake/TaskLib.html) in the style of [Rake::TestTask](http://rake.rubyforge.org/Rake/TestTask.html).
+
+It consecutively reads all the files matching a pattern (default: "\*.js") within the root-level of an array of input directories. It scans each of the input files for the following pattern:
+
+    //= require relative_path/filename
+
+You might notice: That is not surprisingly the same syntax sprocket uses. So if you ever need or want to go down that road, you do not need to change things.
+
+### Invocation
+
+TBD
+
+### Example
+
+TBC
+
+    assets/js    
+    ├── lib
+    │   ├── fu.js
+    │   ├── module1.js
+    │   ├── module2.js
+    │   └── module3.js
+    ├── main.js
+    └── minime.js
+
+```javascript
+//= require lib/module1.js
+//= require lib/module3.js
+
+// The Big Document Ready Guard with the main implementation
+$( document ).ready(function() {
+
+  // do stuff here
+
+}); // document ready
+
+```
 
 ## Development
 
