@@ -52,21 +52,32 @@ end # class BuildTask
 
 
 class FileReader
-	attr_reader :file 			# accessor is done manually
+
+    # The full path of the base file
+	attr_reader :file 			
+
+    # The include list after reading the base file
 	attr_reader :include_list
 
+    # create file reader
 	def initialize params = {}
 		params.each { |key, value| send "#{key}=", value }
 	end
 
+    # set the filename and creates the include list
 	def file=(name)
 		@file = name
 		create_include_list
 	end
 
-	private
+    # executes the concatenation and returns the result for further fun
+    def execute
+        res = @include_list.map { |re_file| IO.read File.join(File.dirname(@file),re_file) }
+        res << IO.read(@file)
+        res.join "\n"
+    end
 
-	def create_include_list 
+	def create_include_list # :nodoc:
 		unless File.readable?(@file)
 			raise "Can't open File: #{@file}"
 		end
