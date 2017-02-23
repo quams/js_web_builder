@@ -45,7 +45,15 @@ It consecutively reads all the files matching a pattern (default: "\*.js") withi
 
     //= require relative_path/filename
 
-You might notice: That is not surprisingly the same syntax sprocket uses. So if you ever need or want to go down that road, you do not need to change things.
+You might notice: That is not surprisingly the same syntax sprocket uses. So if you ever need or want to go down that road, you do not need to change too many things.
+
+The interpretation of the requires is pretty simple and adheres strictly to the following rules:
+
+1. **Relative path:** All includes are relative to the file read. In my cases required files are either in the same directory, or more likely, in a subdirectory.
+2. **Order:** JSWebBuilder follows the order of the require statements when concatenating. The end of the concatenated file will be the input file.
+3. **No recursion:** The required files are not interpreted at all. In principle that would be simple, bu I currently really have no desire to implement a endless-loop detection.
+
+That's basically it, there is really not any magic at all involved!
 
 ### Invocation
 
@@ -53,7 +61,7 @@ TBD
 
 ### Example
 
-TBC
+Imagine the following tree for the javascript files of our web application:
 
     assets/js    
     ├── lib
@@ -64,18 +72,42 @@ TBC
     ├── main.js
     └── minime.js
 
+And *minime.js* looking like this:
+
 ```javascript
 //= require lib/module1.js
 //= require lib/module3.js
 
 // The Big Document Ready Guard with the main implementation
 $( document ).ready(function() {
-
   // do stuff here
-
 }); // document ready
-
 ```
+
+Include this code in the respective Rake file:
+
+```ruby
+JSWebBuilder::BuildTask.new(:build_js) do |b|
+    b.outdir    << File.join(File.dirname(__FILE__),"public/js/")
+    b.inputdirs << File.join(File.dirname(__FILE__),"assets/js/")
+end
+```
+
+And the resulting _minime.js_ in the _public/js_ folder is the equivalent of the following shell command:
+
+    $ cat assets/js/lib/module1.js assets/js/lib/module3.js assets/js/minime.js > public/js/minime.js
+
+## ToDos:
+
+I might want to add the following in the near future:
+
+- Make it a "real" gem, e.g. pushing it to [rubygems.org](https://rubygems.org)
+- Include post-processors, eg. [uglifier](https://github.com/lautis/uglifier) or [Closure Compiler](https://github.com/documentcloud/closure-compiler)
+- Make an exclude pattern
+- lib path
+- Make a manifest-based clean target
+
+Or I just give sprockets another try...
 
 ## Development
 
