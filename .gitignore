@@ -137,3 +137,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk 
+
+
+
+##############
+## project specific stuff
+spec/public/*.js

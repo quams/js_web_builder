@@ -10,10 +10,15 @@ describe JSWebBuilder do
 
         it "concatenates the js files" do
             JSWebBuilder::BuildTask.new(:build) do |b|
-                b.outdir    << File.join(File.dirname(__FILE__),"public/")
+                b.outdir = File.join(File.dirname(__FILE__),"public/")
                 b.inputdirs << File.join(File.dirname(__FILE__),"assets/")
             end
             Rake::Task[:build].invoke
+
+            main_js = File.exist?(File.join(File.dirname(__FILE__),"public/main.js"))
+            main_js.must_equal true, "main.js not created"
+            minime_js = File.exist?(File.join(File.dirname(__FILE__),"public/minime.js"))
+            minime_js.must_equal true, "minime.js not created"
         end
 
     end

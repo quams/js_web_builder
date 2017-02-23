@@ -33,6 +33,9 @@ class BuildTask < Rake::TaskLib
         @outdir = "."
         @inputdirs = []
 
+        # don't look here!
+        @file_list = []
+
         yield self if block_given?
         define
     end # initialize
@@ -41,11 +44,27 @@ class BuildTask < Rake::TaskLib
     def define 
         desc @description
         task @name => Array(deps) do
-            puts "From #{@inputdirs} #{@outdir}"
+            unless Dir.exist?(@outdir)
+                Dir.mkdir(@outdir)
+            end
+            make_file_list
+            @file_list.each do |target|
+                js = target.execute
+                target_file = File.join(@outdir,File.basename(target.file))
+                File.open(target_file, 'w') { |f| f.write(js) }
+            end
         end
 
         self
     end # define
+
+    def make_file_list # :nodoc:
+        @inputdirs.each do |dir|
+            Rake::FileList[File.join(dir,@pattern)].each do |file|
+                @file_list << FileReader.new(:file => file)
+            end
+        end
+    end
 
 end # class BuildTask
 
