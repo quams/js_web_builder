@@ -61,7 +61,7 @@ class BuildTask < Rake::TaskLib
     def make_file_list # :nodoc:
         @inputdirs.each do |dir|
             Rake::FileList[File.join(dir,@pattern)].each do |file|
-                @file_list << FileReader.new(:file => file)
+                @file_list << TargetFile.new(:file => file)
             end
         end
     end
@@ -70,7 +70,7 @@ end # class BuildTask
 
 
 
-class FileReader
+class TargetFile
 
     # The full path of the base file
 	attr_reader :file 			
@@ -117,6 +117,6 @@ class FileReader
 		end
 	end
 
-end # class FileReader
+end # class TargetFile
 
 end # module JSWebBuilder

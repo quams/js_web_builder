@@ -24,8 +24,8 @@ describe JSWebBuilder do
     end
 
 
-	describe JSWebBuilder::FileReader do
-		let(:reader) { JSWebBuilder::FileReader.new(:file => File.expand_path('../assets/main.js', __FILE__)) }
+	describe JSWebBuilder::TargetFile do
+		let(:reader) { JSWebBuilder::TargetFile.new(:file => File.expand_path('../assets/main.js', __FILE__)) }
 
 		it "must return the correct ordered array of filenames" do
 			reader.include_list.must_equal ["lib/module1.js", "./lib/module2.js", "lib/fu.js"]
