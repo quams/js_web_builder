@@ -10,7 +10,7 @@ This gem exists to allow for a more modular javascript development approach. It 
 
 For a more detailed description look under the usage section.
 
-The whole reason I did this gem is, because I spectacularly failed trying to integrate [sprockets](https://github.com/rails/sprockets) into my application. And having the functionality in my application **and** testing it got me nervous ticks.
+The whole reason I did this gem is, because I spectacularly failed trying to integrate [sprockets](https://github.com/rails/sprockets) into my application. And having the functionality _within_ my application **and** testing it there, while using it gave me nervous ticks.
 
 So I did this. Even though there are most likely 42 other gems or methods to do exactly this. If you nevertheless like my little piece of code, feel free to use it. If you find a bug or want to add something, report it or create a pull request. If you think I am a moron for doing this, be polite and keep it to yourself.
 
