@@ -1,4 +1,4 @@
-# JSWebBuilder [![Build Status](https://travis-ci.org/quams/js_web_builder.svg?branch=master)](https://travis-ci.org/quams/js_web_builder)
+# JSWebBuilder [![Build Status](https://travis-ci.org/quams/js_web_builder.svg?branch=master)](https://travis-ci.org/quams/js_web_builder)[![Gem Version](https://badge.fury.io/rb/js_web_builder.svg)](https://badge.fury.io/rb/js_web_builder)
 
 This gem is a simple little hack to introduce some teeny-weeny bit of JavaScript asset pipeline management to my [sinatra](http://www.sinatrarb.com/) web applications. And since I like [rake](http://rake.rubyforge.org/) the whole thing is basically a custom rake task.
 
