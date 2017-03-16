@@ -1,4 +1,4 @@
-# JSWebBuilder [![Build Status](https://travis-ci.org/quams/js_web_builder.svg?branch=master)](https://travis-ci.org/quams/js_web_builder)[![Gem Version](https://badge.fury.io/rb/js_web_builder.svg)](https://badge.fury.io/rb/js_web_builder)
+# JSWebBuilder [![Build Status](https://travis-ci.org/quams/js_web_builder.svg?branch=master)](https://travis-ci.org/quams/js_web_builder) [![Gem Version](https://badge.fury.io/rb/js_web_builder.svg)](https://badge.fury.io/rb/js_web_builder)
 
 This gem is a simple little hack to introduce some teeny-weeny bit of JavaScript asset pipeline management to my [sinatra](http://www.sinatrarb.com/) web applications. And since I like [rake](http://rake.rubyforge.org/) the whole thing is basically a custom rake task.
 
@@ -88,7 +88,7 @@ Include this code in the respective Rake file:
 
 ```ruby
 JSWebBuilder::BuildTask.new(:build_js) do |b|
-    b.outdir    << File.join(File.dirname(__FILE__),"public/js/")
+    b.outdir     = File.join(File.dirname(__FILE__),"public/js/")
     b.inputdirs << File.join(File.dirname(__FILE__),"assets/js/")
 end
 ```
